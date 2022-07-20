@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://CharacterPhysics.gd" type="Script" id=2]
+[ext_resource path="res://CharacterSprite.gd" type="Script" id=3]
+[ext_resource path="res://Bomb.tscn" type="PackedScene" id=4]
+
+[node name="Scene" type="Node2D"]
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+script = ExtResource( 2 )
+charge_time = 1
+speed = 300
+bomb_scene = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="KinematicBody2D"]
+rotation = 1.5708
+texture = ExtResource( 1 )
+script = ExtResource( 3 )
+
+[connection signal="bomb" from="KinematicBody2D" to="KinematicBody2D/Sprite" method="_on_KinematicBody2D_bomb"]
