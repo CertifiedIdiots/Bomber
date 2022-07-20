@@ -7,15 +7,16 @@
 
 [node name="Scene" type="Node2D"]
 
-[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( 239, 150 )
 script = ExtResource( 2 )
 charge_time = 1
 speed = 300
 bomb_scene = ExtResource( 4 )
 
-[node name="Sprite" type="Sprite" parent="KinematicBody2D"]
+[node name="Sprite" type="Sprite" parent="Player"]
 rotation = 1.5708
 texture = ExtResource( 1 )
 script = ExtResource( 3 )
 
-[connection signal="bomb" from="KinematicBody2D" to="KinematicBody2D/Sprite" method="_on_KinematicBody2D_bomb"]
+[connection signal="bomb" from="Player" to="Player/Sprite" method="_on_KinematicBody2D_bomb"]
