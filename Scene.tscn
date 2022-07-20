@@ -7,8 +7,8 @@
 
 [node name="Scene" type="Node2D"]
 
-[node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 239, 150 )
+[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+position = Vector2( 531, 294 )
 script = ExtResource( 2 )
 charge_time = 1
 speed = 300
