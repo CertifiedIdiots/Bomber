@@ -13,8 +13,8 @@ func _ready():
 	print(self.position)
 	update()
 	
-func _draw():
-	draw_circle(Vector2.ZERO, 30, color)
+#func _draw():
+#	draw_circle(Vector2.ZERO, 30, color)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
