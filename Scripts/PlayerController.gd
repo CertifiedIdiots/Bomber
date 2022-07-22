@@ -22,7 +22,7 @@ func _process(delta):
 		charge = delta
 	elif bombing and not holding:
 		if charge > charge_time:
-			print("bombed!")
+			print("Bomb placed!")
 			emit_signal("bomb")
 			var bomb = bomb_scene.instance()
 			bomb.position = self.position
