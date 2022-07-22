@@ -4,7 +4,7 @@ extends KinematicBody2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export(int) var time = 1
+export(float) var time = 1.5
 export(Color) var color = Color.darkturquoise
 export(PackedScene) var explosion
 
