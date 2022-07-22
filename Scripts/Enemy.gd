@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-export(int) var speed = 30
+export(int) var speed = 100
 
 func _physics_process(delta):
 	var player = get_parent().get_node("Player")
@@ -13,7 +13,3 @@ func _physics_process(delta):
 		var collision = get_slide_collision(i)
 		if collision.collider.name == "Player":
 			collision.collider.queue_free()
-		
-
-	
-	
