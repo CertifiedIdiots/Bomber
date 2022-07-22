@@ -6,6 +6,7 @@ extends KinematicBody2D
 # var b = "text"
 export(int) var time = 1
 export(Color) var color = Color.darkturquoise
+export(PackedScene) var explosion
 
 
 # Called when the node enters the scene tree for the first time.
@@ -21,10 +22,10 @@ func _process(delta):
 	time -= delta
 	if time <= 0:
 		explode()
-		if time <= -0.5:
-			queue_free()
 		
 func explode():
 	color = Color.transparent
-	get_node("Explosion").show()
-	update()
+	var instance = explosion.instance()
+	instance.position = self.position
+	get_parent().add_child(instance)
+	queue_free()
