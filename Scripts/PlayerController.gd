@@ -1,8 +1,7 @@
-extends KinematicBody2D
+extends "Living.gd"
 
 signal charge_bomb
 
-var velocity = Vector2.ZERO
 # whether player is holding a bomb that is fully charged
 var bomb_ready = false
 var charge = 0

@@ -14,6 +14,8 @@ func _on_Timer_timeout():
 func _on_Explosion_body_entered(body):
 	if body.name.begins_with("Enemy"):
 		body.damage(50)
+		body.stunned = 0.5
+		body.velocity = (body.position - self.position) * 10
 
 func update_radius(radius):
 	self.radius = radius
