@@ -42,6 +42,8 @@ func processShield():
 
 func _physics_process(delta):
 	velocity = Input.get_vector("move_left", "move_right", "move_up", "move_down") * move_speed
+	if Input.is_action_pressed("shield"):
+		velocity /= 2
 	velocity = move_and_slide(velocity)
 	look_at(get_global_mouse_position())
 
