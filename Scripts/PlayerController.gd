@@ -15,6 +15,7 @@ export(PackedScene) var placed_bomb
 func _process(delta):
 	processBomb(delta)
 	processShield()
+	look_at(get_global_mouse_position())
 
 func processBomb(delta):
 	var charging = Input.is_action_pressed("charge_bomb")
@@ -32,6 +33,7 @@ func processBomb(delta):
 		get_parent().add_child(bomb)
 		print("Bomb placed!")
 		bomb_ready = false
+		stunned = 0.3
 
 func processShield():
 	if Input.is_action_pressed("shield"):
@@ -40,9 +42,12 @@ func processShield():
 		get_node("Shield").toggle(false)
 
 func _physics_process(delta):
-	velocity = Input.get_vector("move_left", "move_right", "move_up", "move_down") * move_speed
-	if Input.is_action_pressed("shield"):
-		velocity /= 2
+	if stunned:
+		velocity = Vector2.ZERO
+	else:
+		velocity = Input.get_vector("move_left", "move_right", "move_up", "move_down") * move_speed
+		if Input.is_action_pressed("shield"):
+			velocity /= 2
 	velocity = move_and_slide(velocity)
-	look_at(get_global_mouse_position())
+
 
