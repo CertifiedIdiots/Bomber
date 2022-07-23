@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
+export(float) var health = 100
 export(int) var speed = 100
+
 
 func _physics_process(delta):
 	var player = get_parent().get_node("Player")
@@ -20,3 +22,13 @@ func _physics_process(delta):
 
 func attack():
 	pass
+	
+func damage(damage: float):
+	health -= damage
+	print("dealt " + str(damage) + " damage!")
+	
+	if health <= 0:
+		queue_free()
+	return
+	
+
