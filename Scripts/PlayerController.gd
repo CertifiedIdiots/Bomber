@@ -13,11 +13,11 @@ export(float) var charge_time = 0.5
 export(int) var move_speed = 160
 export(PackedScene) var placed_bomb
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-	
 func _process(delta):
+	processBomb(delta)
+	processShield()
+
+func processBomb(delta):
 	var charging = Input.is_action_pressed("charge_bomb")
 	if charging and not bomb_ready:
 		charge += delta
@@ -34,21 +34,11 @@ func _process(delta):
 		print("Bomb placed!")
 		bomb_ready = false
 
-# old function
-#	if bomb_ready and charging:
-#		charge += delta
-#	elif not bomb_ready and charging:
-#		charge = delta
-#	elif bomb_ready and not charging:
-#		if charge > charge_time:
-#			print("Bomb placed!")
-#			emit_signal("charge_bomb")
-#			var bomb = placed_bomb.instance()
-#			bomb.position = self.position
-#			get_parent().add_child(bomb)
-#		charge = 0	
-#	bomb_ready = charging
-
+func processShield():
+	if Input.is_action_pressed("shield"):
+		get_node("Shield").toggle(true)
+	else:
+		get_node("Shield").toggle(false)
 
 func _physics_process(delta):
 	velocity = Input.get_vector("move_left", "move_right", "move_up", "move_down") * move_speed

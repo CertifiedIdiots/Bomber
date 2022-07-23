@@ -14,3 +14,7 @@ func _on_Timer_timeout():
 func _on_Explosion_body_entered(body):
 	if body.name.begins_with("Enemy"):
 		body.queue_free()
+		
+func update_radius(radius):
+	self.radius = radius
+	self.get_node("CollisionShape2D").shape.radius = radius

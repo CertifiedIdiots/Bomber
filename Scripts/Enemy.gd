@@ -7,10 +7,16 @@ func _physics_process(delta):
 	if player == null:
 		return
 		
-	var direction = (player.position - self.position).normalized()
-	move_and_slide(direction * speed)
+	var difference = (player.position - self.position)
+	if difference.length() < 20:
+		attack()
+		
+	move_and_slide(difference.normalized() * speed)
 	
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 		if collision.collider.name == "Player":
 			collision.collider.queue_free()
+
+func attack():
+	pass
