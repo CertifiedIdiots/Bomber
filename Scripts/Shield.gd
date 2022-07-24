@@ -17,9 +17,18 @@ func _process(delta):
 		recharge = 0
 		
 func _draw():
-#	print(enabled)
 	if enabled:
-		draw_arc(Vector2.ZERO, 35, 0, TAU, 360, color)
+		var color = Color.blue
+		if health <= 1:
+			color = Color.crimson
+		elif health <= 2:
+			color = Color.coral
+		elif health <= 3:
+			color = Color.yellow
+		elif health <= 4:
+			color = Color.aquamarine
+		else:
+			draw_arc(Vector2.ZERO, 35, 0, TAU, 360, color)
 
 func damage(amount):
 	health = max(0, health - amount)

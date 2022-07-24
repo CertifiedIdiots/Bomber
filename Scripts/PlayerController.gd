@@ -5,6 +5,7 @@ signal charge_bomb
 # whether player is holding a bomb that is fully charged
 var bomb_ready = false
 var charge = 0
+var type = "player"
 
 # time in seconds to fully charge bomb
 export(float) var charge_time = 0.5

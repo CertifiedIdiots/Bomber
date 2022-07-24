@@ -11,7 +11,6 @@ export(PackedScene) var explosion
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print(self.position)
 	update()
 	
 #func _draw():
