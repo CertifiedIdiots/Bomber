@@ -1,8 +1,10 @@
 extends "Living.gd"
 
 export(int) var speed = 100
-export(int) var attack_range = 70
+const attack_range = 70
 const friction = 0.1
+
+export(PackedScene) var attack_visual
 
 
 func _ready():
@@ -16,15 +18,14 @@ func _physics_process(delta):
 	elif distance.length() > attack_range:
 		velocity = distance.normalized() * speed
 		velocity = move_and_slide(velocity)
-	else:
-		stunned = 0.5
+	elif not stunned:
+		stunned = 1.0
 		attack()
-		print("attacked!")
 	
-	for i in get_slide_count():
-		var collision = get_slide_collision(i)
-		if collision.collider && collision.collider.name == "Player":
-			collision.collider.queue_free()
+#	for i in get_slide_count():
+#		var collision = get_slide_collision(i)
+#		if collision.collider && collision.collider.name == "Player":
+#			collision.collider.queue_free()
 
 func get_distance_to_player():
 	var player = get_parent().get_node("Player")
@@ -34,7 +35,9 @@ func get_distance_to_player():
 	return difference
 
 func attack():
-	
-	pass
-	
+	var instance:Node2D = attack_visual.instance()
+	instance.position = self.position
+	instance.attack_area( Vector2(10, attack_range) )
+	get_parent().add_child(instance)
+#	print(instance.position)
 

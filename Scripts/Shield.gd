@@ -17,7 +17,7 @@ func _process(delta):
 		recharge = 0
 		
 func _draw():
-	print(enabled)
+#	print(enabled)
 	if enabled:
 		draw_arc(Vector2.ZERO, 35, 0, TAU, 360, color)
 
