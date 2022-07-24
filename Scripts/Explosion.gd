@@ -15,7 +15,7 @@ func _on_Explosion_body_entered(body):
 	if body.name.begins_with("Enemy"):
 		body.damage(50)
 		body.stunned = 0.5
-		body.velocity = (body.position - self.position) * 10
+		body.velocity = (body.position - self.position) * 5
 
 func update_radius(radius):
 	self.radius = radius
