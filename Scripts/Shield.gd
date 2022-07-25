@@ -7,9 +7,10 @@ export(Color) var color = Color.blue
 var recharge = 0
 var health = max_health
 var enabled = false
+var alive = true
 
 func _process(delta):
-	if health < max_health:
+	if health < max_health && alive:
 		recharge += delta
 		if recharge >= recharge_rate:
 			health += 50
@@ -19,7 +20,7 @@ func _process(delta):
 		recharge = 0
 		
 func _draw():
-	if enabled:
+	if enabled && alive:
 		var color = Color.blue
 		if health <= 50:
 			color = Color.crimson
@@ -34,10 +35,14 @@ func _draw():
 func damage(amount):
 	health = max(0, health - amount)
 	recharge = 0
+	if health <= 0:
+		$DeathTimer.paused = false
+		$DeathTimer.start(8)
+		alive = false
 	update()
 
 func toggle(value):
-	self.enabled = value
+	enabled = value
 	update()
 
 func _on_Shield_body_entered(body: Node):
@@ -46,3 +51,7 @@ func _on_Shield_body_entered(body: Node):
 		var force = (body.position - get_parent().position).normalized() * 100
 		print(force)
 		body.velocity = force * 5
+
+func _on_DeathTimer_timeout():
+	alive = true
+	print("Shield charging again!")

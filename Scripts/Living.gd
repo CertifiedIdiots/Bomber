@@ -8,7 +8,7 @@ func _process(delta):
 	stunned = max(0, stunned - delta)
 
 func damage(amount: float):
-	if has_node("Shield") && $Shield.health > 0:
+	if has_node("Shield") && $Shield.enabled && $Shield.health > 0:
 		$Shield.damage(amount)
 	else:
 		self.health -= amount
