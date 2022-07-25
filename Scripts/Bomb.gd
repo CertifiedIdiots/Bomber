@@ -25,6 +25,6 @@ func explode():
 	color = Color.transparent
 	var instance:Node2D = explosion.instance()
 	instance.position = self.position
-	instance.update_radius(radius)
+	instance.init("enemy", radius)
 	get_parent().add_child(instance)
 	queue_free()
