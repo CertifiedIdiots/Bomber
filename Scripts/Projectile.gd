@@ -18,6 +18,7 @@ func _draw():
 
 func _on_Projectile_body_entered(body: Node):
 	if body.is_in_group(self.target):
+		body.damage(50)
 		queue_free()
 	if body is TileMap:
 		queue_free()

@@ -1,7 +1,7 @@
 extends Area2D
 
-export(int) var max_health = 5
-export(float) var recharge_rate = 0.5
+export(int) var max_health = 250
+export(float) var recharge_rate = 2
 export(Color) var color = Color.blue
 
 var recharge = 0
@@ -12,27 +12,29 @@ func _process(delta):
 	if health < max_health:
 		recharge += delta
 		if recharge >= recharge_rate:
-			health += 1
+			health += 50
+			recharge = 0
+			update()
 	else:
 		recharge = 0
 		
 func _draw():
 	if enabled:
 		var color = Color.blue
-		if health <= 1:
+		if health <= 50:
 			color = Color.crimson
-		elif health <= 2:
+		elif health <= 100:
 			color = Color.coral
-		elif health <= 3:
+		elif health <= 150:
 			color = Color.yellow
-		elif health <= 4:
+		elif health <= 200:
 			color = Color.aquamarine
-		else:
-			draw_arc(Vector2.ZERO, 35, 0, TAU, 360, color)
+		draw_arc(Vector2.ZERO, 35, 0, TAU, 360, color, 5)
 
 func damage(amount):
 	health = max(0, health - amount)
 	recharge = 0
+	update()
 
 func toggle(value):
 	self.enabled = value
