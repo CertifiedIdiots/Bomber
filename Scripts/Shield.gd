@@ -18,7 +18,7 @@ func _process(delta):
 			update()
 	else:
 		recharge = 0
-		
+
 func _draw():
 	if enabled && alive:
 		var color = Color.blue
@@ -43,15 +43,16 @@ func damage(amount):
 
 func toggle(value):
 	enabled = value
+	if enabled && alive:
+		push_enemies()
 	update()
 
-func _on_Shield_body_entered(body: Node):
-	if body.is_in_group("enemy"):
-		body.stunned = 0.5
-		var force = (body.position - get_parent().position).normalized() * 100
-		print(force)
-		body.velocity = force * 5
+func push_enemies():
+	for body in get_overlapping_bodies():
+		if body.is_in_group("enemy"):
+			body.stunned = 0.5
+			var force = (body.position - get_parent().position).normalized() * 100
+			body.velocity = force * 5
 
 func _on_DeathTimer_timeout():
 	alive = true
-	print("Shield charging again!")

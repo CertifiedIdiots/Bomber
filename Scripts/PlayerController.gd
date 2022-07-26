@@ -37,9 +37,9 @@ func processBomb(delta):
 		stunned = 0.3
 
 func processShield():
-	if Input.is_action_pressed("shield"):
+	if Input.is_action_just_pressed("shield"):
 		get_node("Shield").toggle(true)
-	else:
+	if Input.is_action_just_released("shield"):
 		get_node("Shield").toggle(false)
 
 func _physics_process(delta):
