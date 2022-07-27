@@ -43,8 +43,8 @@ func get_distance_to_player():
 func dash_attack():
 	var player = get_parent().get_node("Player")
 	var direction = player.global_position - self.global_position
-	var endpoint = direction.normalized() * dash_length
-	$CollisionShape2D.disabled = true
+	var endpoint = self.position + direction.normalized() * dash_length
+#	$CollisionShape2D.disabled = true
 	$Tween.interpolate_property(self, "position", self.position, endpoint, 0.4, Tween.TRANS_LINEAR, Tween.EASE_OUT)
 #	print(endpoint)
 #	print(player.position)
