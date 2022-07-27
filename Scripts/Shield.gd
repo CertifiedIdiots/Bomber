@@ -30,7 +30,7 @@ func _draw():
 			color = Color.yellow
 		elif health <= 200:
 			color = Color.aquamarine
-		draw_arc(Vector2.ZERO, 25, 0, TAU, 360, color, 5)
+		draw_arc(Vector2.ZERO, 25, 0, TAU, $CollisionShape2D.shape.radius, color, 5)
 
 func damage(amount):
 	health = max(0, health - amount)

@@ -282,6 +282,7 @@ tile_data = PoolIntArray( 0, 5, 0, 1, 5, 0, 2, 5, 0, 3, 5, 0, 4, 5, 0, 5, 5, 0, 
 
 [node name="Player" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 502, 290 )
+health = 1000
 
 [node name="Enemy" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 346, 364 )

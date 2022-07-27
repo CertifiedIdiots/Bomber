@@ -17,6 +17,12 @@ texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 128, 48, 16, 16 )
 
+[node name="Tween" type="Tween" parent="Sprite"]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -1 )
 shape = SubResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

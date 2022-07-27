@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 export(int) var health = 100
 var stunned = 0
+var dashing = false
 var velocity = Vector2.ZERO
 
 func _process(delta):
@@ -20,3 +21,6 @@ func die():
 
 func is_stunned():
 	return stunned <= 0
+
+func is_dashing():
+	return dashing
