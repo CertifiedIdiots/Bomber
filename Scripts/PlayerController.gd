@@ -44,11 +44,11 @@ func processShield():
 
 func _physics_process(delta):
 	if stunned:
-		movement = Vector2.ZERO
+		velocity = Vector2.ZERO
 	else:
-		movement = Input.get_vector("move_left", "move_right", "move_up", "move_down") * move_speed
+		velocity = Input.get_vector("move_left", "move_right", "move_up", "move_down") * move_speed
 		if Input.is_action_pressed("shield"):
-			movement /= 2
-	movement = move_and_slide(movement)
+			velocity /= 2
+	velocity = move_and_slide(velocity)
 
 

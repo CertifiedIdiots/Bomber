@@ -3,7 +3,7 @@ extends KinematicBody2D
 export(int) var health = 100
 var stunned = 0
 var dashing = false
-var movement = Vector2.ZERO
+var velocity = Vector2.ZERO
 
 func _process(delta):
 	stunned = max(0, stunned - delta)

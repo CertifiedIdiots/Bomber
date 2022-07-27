@@ -1,12 +1,11 @@
 extends "Living.gd"
 
 export(int) var speed = 80
-var attack_range = 90
+var attack_range = 40
 var attack_cooldown = rand_range(2.5, 5.0)
-var dash_length = 120.0
+var dash_length = 20.0
+var last_dash = null
 const friction = 0.1
-
-
 
 var attack_scene = preload("res://Objects/Attack.tscn")
 
@@ -17,17 +16,15 @@ func _physics_process(delta):
 	var distance = get_distance_to_player()
 	
 	if stunned:
-		movement = lerp(movement, Vector2.ZERO, friction)
-		movement = move_and_slide(movement, Vector2.ZERO, false, 1)
+		velocity = lerp(velocity, Vector2.ZERO, friction)
+		velocity = move_and_slide(velocity, Vector2.ZERO, false, 1)
 	elif distance.length() > attack_range:
-		movement = distance.normalized() * speed
-		movement = move_and_slide(movement)
+		velocity = distance.normalized() * speed
+		velocity = move_and_slide(velocity)
 	elif not stunned and distance.length() <= attack_range:
 		attack(get_parent().get_node("Player"))
 
-
 	attack_cooldown = max(0, attack_cooldown - delta)
-#	self.windup = max(0, self.windup - delta)
 
 func get_distance_to_player():
 	var player = get_parent().get_node("Player")
@@ -35,36 +32,25 @@ func get_distance_to_player():
 		return Vector2.ZERO
 	
 	return (player.global_position - self.global_position)
-	
-#func windup(time):
-#	self.stunned = time
-#	$Sprite/Tween.interpolate_property(self, "position", Vector2())
 
 func dash_attack():
 	var player = get_parent().get_node("Player")
 	var direction = player.global_position - self.global_position
 	var endpoint = self.position + direction.normalized() * dash_length
-#	$CollisionShape2D.disabled = true
-	$Tween.interpolate_property(self, "position", self.position, endpoint, 0.4, Tween.TRANS_LINEAR, Tween.EASE_OUT)
-#	print(endpoint)
-#	print(player.position)
-	
+	self.last_dash = self.position
+	$Tween.interpolate_property(self, "position", self.position, endpoint, 0.2, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 	$Tween.start()
-#	$CollisionShape2D.disabled = false
 	
 func attack(target):
 	var cooldown = attack_cooldown
-#	self.windup(0.3)
 	if cooldown <= 0:
 		stunned = 1.0
 		dash_attack()
 		cooldown = rand_range(2.5, 5.0)
-#		print(target.position)
-		
-	
-	
-#	var instance:Node2D = attack_scene.instance()
-#	instance.position = self.position
-#	instance.attack_area( Vector2(10, attack_range) )
-#	get_parent().add_child(instance)
-#	print(instance.position)
+
+
+func _on_Tween_tween_completed(object, key):
+	if last_dash != null:
+		$Tween.interpolate_property(self, "position", self.position, last_dash, 0.2, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+		$Tween.start()
+		last_dash = null
