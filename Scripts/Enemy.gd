@@ -1,9 +1,12 @@
 extends "Living.gd"
 
-export(int) var speed = 100
-var attack_range = 70
-var attack_cooldown = 3.0
+export(int) var speed = 80
+var attack_range = 90
+var attack_cooldown = rand_range(2.5, 5.0)
+var dash_length = 120.0
 const friction = 0.1
+
+
 
 var attack_scene = preload("res://Objects/Attack.tscn")
 
@@ -12,45 +15,51 @@ func _ready():
 
 func _physics_process(delta):
 	var distance = get_distance_to_player()
+	
 	if stunned:
-		velocity = lerp(velocity, Vector2.ZERO, friction)
-		velocity = move_and_slide(velocity, Vector2.ZERO, false, 1)
+		movement = lerp(movement, Vector2.ZERO, friction)
+		movement = move_and_slide(movement, Vector2.ZERO, false, 1)
 	elif distance.length() > attack_range:
-		velocity = distance.normalized() * speed
-		velocity = move_and_slide(velocity)
+		movement = distance.normalized() * speed
+		movement = move_and_slide(movement)
 	elif not stunned and distance.length() <= attack_range:
 		attack(get_parent().get_node("Player"))
 
+
 	attack_cooldown = max(0, attack_cooldown - delta)
+#	self.windup = max(0, self.windup - delta)
 
 func get_distance_to_player():
 	var player = get_parent().get_node("Player")
 	if player == null:
 		return Vector2.ZERO
 	
-	return (player.position - self.position)
+	return (player.global_position - self.global_position)
 	
-func _on_Area2D_body_entered(body: Node):
-	if self.is_dashing():
-		body.damage(50)
-	
-func windup(time: float):
-	stunned = time
+#func windup(time):
+#	self.stunned = time
 #	$Sprite/Tween.interpolate_property(self, "position", Vector2())
 
 func dash_attack():
-	self.dashing = true
-	print("enemey dash")
-	self.dashing = false
+	var player = get_parent().get_node("Player")
+	var direction = player.global_position - self.global_position
+	var endpoint = direction.normalized() * dash_length
+	$CollisionShape2D.disabled = true
+	$Tween.interpolate_property(self, "position", self.position, endpoint, 0.4, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+#	print(endpoint)
+#	print(player.position)
+	
+	$Tween.start()
+#	$CollisionShape2D.disabled = false
 	
 func attack(target):
 	var cooldown = attack_cooldown
-	self.windup(0.3)
+#	self.windup(0.3)
 	if cooldown <= 0:
 		stunned = 1.0
-		self.dash_attack()
-		cooldown = 3.0
-	
+		dash_attack()
+		cooldown = rand_range(2.5, 5.0)
+#		print(target.position)
 		
 	
 	
