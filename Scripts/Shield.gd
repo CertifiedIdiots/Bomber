@@ -3,6 +3,7 @@ extends Area2D
 export(int) var max_health = 250
 export(float) var recharge_rate = 2
 export(Color) var color = Color.blue
+export(float) var radius = 25
 
 var recharge = 0
 var health = max_health
@@ -30,7 +31,8 @@ func _draw():
 			color = Color.yellow
 		elif health <= 200:
 			color = Color.aquamarine
-		draw_arc(Vector2.ZERO, 25, 0, TAU, $CollisionShape2D.shape.radius, color, 5)
+		$CollisionShape2D.shape.radius = radius
+		draw_arc(Vector2.ZERO, radius, 0, TAU, 360, color, 4)
 
 func damage(amount):
 	health = max(0, health - amount)

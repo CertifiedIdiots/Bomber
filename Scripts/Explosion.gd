@@ -21,5 +21,5 @@ func _on_Explosion_body_entered(body: Node):
 	if body.is_in_group(self.target):
 		body.damage(50)
 		body.stunned = 0.5
-		body.movement = (body.position - self.position) * 5
+		body.velocity = (body.position - self.position) * 5
 
