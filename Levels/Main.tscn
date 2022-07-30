@@ -281,23 +281,17 @@ tile_data = PoolIntArray( 524309, 4, 0, 524310, 4, 0, 524311, 4, 0, 524312, 4, 0
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" parent="YSort" instance=ExtResource( 2 )]
-position = Vector2( 502, 290 )
-health = 200
+position = Vector2( 513, 279 )
+health = 1000
 
 [node name="Enemy" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 438, 343 )
+position = Vector2( 383, 407 )
 
 [node name="Enemy2" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 571, 357 )
+position = Vector2( 646, 409 )
 
 [node name="Enemy3" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 428, 196 )
+position = Vector2( 372, 169 )
 
 [node name="Enemy4" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 555, 207 )
-
-[node name="Enemy5" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 605, 272 )
-
-[node name="Enemy6" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 387, 268 )
+position = Vector2( 652, 167 )
