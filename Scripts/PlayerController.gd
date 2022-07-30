@@ -6,6 +6,7 @@ signal charge_bomb
 var bomb_ready = false
 var charge = 0
 var type = "player"
+var invulnerable = 0
 
 # time in seconds to fully charge bomb
 export(float) var charge_time = 0.5
@@ -17,6 +18,7 @@ func _process(delta):
 	processBomb(delta)
 	processShield()
 	look_at(get_global_mouse_position())
+	invulnerable = max(0, invulnerable - delta)
 
 func processBomb(delta):
 	var charging = Input.is_action_pressed("charge_bomb")
@@ -50,5 +52,9 @@ func _physics_process(delta):
 		if Input.is_action_pressed("shield"):
 			velocity /= 2
 	velocity = move_and_slide(velocity)
+
+func damage(amount):
+	if invulnerable <= 0:
+		.damage(amount)
 
 

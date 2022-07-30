@@ -2,10 +2,11 @@ extends "Living.gd"
 
 export(int) var speed = 80
 var attack_range = 40
-var attack_cooldown = rand_range(2.5, 5.0)
+var attack_cooldown = 0
 var dash_length = 20.0
 var last_dash = null
-const friction = 0.1
+var damaging = false
+var friction = 0.1
 
 var attack_scene = preload("res://Objects/Attack.tscn")
 
@@ -38,19 +39,26 @@ func dash_attack():
 	var direction = player.global_position - self.global_position
 	var endpoint = self.position + direction.normalized() * dash_length
 	self.last_dash = self.position
+	damaging = true
 	$Tween.interpolate_property(self, "position", self.position, endpoint, 0.2, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 	$Tween.start()
-	
-func attack(target):
-	var cooldown = attack_cooldown
-	if cooldown <= 0:
-		stunned = 1.0
-		dash_attack()
-		cooldown = rand_range(2.5, 5.0)
 
+func attack(target):
+	if attack_cooldown <= 0:
+		$Sprite.modulate = Color(1, 0, 0)
+		stunned = 1.0
+		yield(get_tree().create_timer(0.5), "timeout")
+		dash_attack()
+		attack_cooldown = rand_range(2.5, 5.0)
 
 func _on_Tween_tween_completed(object, key):
 	if last_dash != null:
 		$Tween.interpolate_property(self, "position", self.position, last_dash, 0.2, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 		$Tween.start()
+		$Sprite.modulate = Color.white
 		last_dash = null
+		damaging = false
+
+func _on_DamageShape_body_entered(body):
+	if body.is_in_group("player"):
+		body.damage(50)
