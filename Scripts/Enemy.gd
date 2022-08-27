@@ -8,6 +8,7 @@ var last_dash = null
 var damaging = false
 var friction = 0.1
 var endpoint = null
+var direction = null
 
 var attack_scene = preload("res://Objects/Attack.tscn")
 
@@ -37,7 +38,6 @@ func get_distance_to_player():
 
 func dash_attack():
 	var player = get_parent().get_node("Player")
-	var direction = player.global_position - self.global_position
 	var direction_range = direction.normalized()
 	endpoint = self.position + direction.normalized() * dash_length
 	self.last_dash = self.position
@@ -47,11 +47,11 @@ func dash_attack():
 
 func attack(target):
 	var player = get_parent().get_node("Player")
-	var direction = player.global_position - self.global_position
+	direction = player.global_position - self.global_position
 	if attack_cooldown <= 0:
 		$Sprite.modulate = Color(1, 0, 0)
 		stunned = 1.5
-		yield(get_tree().create_timer(1.0), "timeout")
+		yield(get_tree().create_timer(0.5), "timeout")
 		dash_attack()
 		attack_cooldown = rand_range(2.0, 4.0)
 		$Sprite.modulate = Color.white
