@@ -51,7 +51,7 @@ func toggle(value):
 
 func push_enemies():
 	for body in get_overlapping_bodies():
-		if body.is_in_group("enemy"):
+		if body.is_in_group("enemy") and body.pushable:
 			body.stunned = 0.5
 			var force = (body.position - get_parent().position).normalized() * 100
 			body.velocity = force * 5

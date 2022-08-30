@@ -9,6 +9,7 @@ var damaging = false
 var friction = 0.1
 var endpoint = null
 var direction = null
+var pushable = true
 
 var attack_scene = preload("res://Objects/Attack.tscn")
 
