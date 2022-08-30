@@ -9,8 +9,13 @@ func _ready():
 func attack(target):
 	if stunned > 0: 
 		return
+	
+	$Sprite.modulate = Color(1, 0, 0)
+	stunned = 1.5
+	yield(get_tree().create_timer(0.5), "timeout")
 	var instance:Node2D = self.attack_scene.instance()
 	instance.init(self, target)
 	instance.position = self.position
 	get_parent().add_child(instance)
 	self.stunned = 1.5
+	$Sprite.modulate = Color.white
