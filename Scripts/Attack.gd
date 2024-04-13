@@ -1,6 +1,6 @@
 extends Area2D
 
-export(Color) var color = Color.red
+@export var color: Color = Color.RED
 
 
 

@@ -1,9 +1,9 @@
 extends Area2D
 
-export(int) var max_health = 250
-export(float) var recharge_rate = 2
-export(Color) var color = Color.blue
-export(float) var radius = 25
+@export var max_health: int = 250
+@export var recharge_rate: float = 2
+@export var color: Color = Color.BLUE
+@export var radius: float = 25
 
 var recharge = 0
 var health = max_health
@@ -16,21 +16,21 @@ func _process(delta):
 		if recharge >= recharge_rate:
 			health += 50
 			recharge = 0
-			update()
 	else:
 		recharge = 0
+	queue_redraw()
 
 func _draw():
 	if enabled && alive:
-		var color = Color.blue
+		var color = Color.BLUE
 		if health <= 50:
-			color = Color.crimson
+			color = Color.CRIMSON
 		elif health <= 100:
-			color = Color.coral
+			color = Color.CORAL
 		elif health <= 150:
-			color = Color.yellow
+			color = Color.YELLOW
 		elif health <= 200:
-			color = Color.aquamarine
+			color = Color.AQUAMARINE
 		$CollisionShape2D.shape.radius = radius
 		draw_arc(Vector2.ZERO, radius, 0, TAU, 360, color, 4)
 
@@ -41,13 +41,11 @@ func damage(amount):
 		$DeathTimer.paused = false
 		$DeathTimer.start(8)
 		alive = false
-	update()
 
 func toggle(value):
 	enabled = value
 	if enabled && alive:
 		push_enemies()
-	update()
 
 func push_enemies():
 	for body in get_overlapping_bodies():

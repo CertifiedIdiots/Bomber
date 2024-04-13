@@ -1,7 +1,7 @@
-extends AnimatedSprite
+extends AnimatedSprite2D
 
-export(float) var radius = 50.0
-export(Color) var color = Color.red
+@export var radius: float = 50.0
+@export var color: Color = Color.RED
 var target = "none"
 
 var center = Vector2.ZERO
@@ -9,7 +9,7 @@ var center = Vector2.ZERO
 func init(target, radius):
 	self.target = target
 	self.radius = radius
-	get_node("Explosion/Shape").shape.radius = radius
+	get_node("Explosion/Shape3D").shape.radius = radius
 
 func _ready():
 	self.play()

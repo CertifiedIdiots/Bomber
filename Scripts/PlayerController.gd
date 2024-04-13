@@ -9,12 +9,13 @@ var type = "player"
 var invulnerable = 0
 
 # time in seconds to fully charge bomb
-export(float) var charge_time = 0.5
+@export var charge_time: float = 0.5
 # player move speed in pixels/second
-export(int) var move_speed = 160
-export(PackedScene) var placed_bomb
+@export var move_speed: int = 160
+@export var placed_bomb: PackedScene
 
 func _process(delta):
+	super._process(delta)
 	processBomb(delta)
 	processShield()
 	look_at(get_global_mouse_position())
@@ -31,12 +32,12 @@ func processBomb(delta):
 		print("Bomb Ready!")
 	elif not charging and bomb_ready:
 		emit_signal("charge_bomb")
-		var bomb = placed_bomb.instance()
+		var bomb = placed_bomb.instantiate()
 		bomb.position = self.position
 		get_parent().add_child(bomb)
 		print("Bomb placed!")
 		bomb_ready = false
-		stunned = 0.3
+		super.stun(0.3)
 
 func processShield():
 	if Input.is_action_just_pressed("shield"):
@@ -45,16 +46,18 @@ func processShield():
 		get_node("Shield").toggle(false)
 
 func _physics_process(delta):
-	if stunned:
+	if super.is_stunned():
 		velocity = Vector2.ZERO
 	else:
 		velocity = Input.get_vector("move_left", "move_right", "move_up", "move_down") * move_speed
 		if Input.is_action_pressed("shield"):
 			velocity /= 2
-	velocity = move_and_slide(velocity)
+	set_velocity(velocity)
+	move_and_slide()
+	velocity = velocity
 
 func damage(amount):
 	if invulnerable <= 0:
-		.damage(amount)
+		super.damage(amount)
 
 

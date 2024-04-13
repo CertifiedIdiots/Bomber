@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/Explosion.gd" type="Script" id=1]
-[ext_resource path="res://Art/Explosion.png" type="Texture" id=2]
+[ext_resource path="res://Art/Explosion.png" type="Texture2D" id=2]
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 2 )
@@ -62,7 +62,7 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=1]
 radius = 50.0
 
-[node name="AnimatedSprite" type="AnimatedSprite"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 frames = SubResource( 14 )
 script = ExtResource( 1 )
 
@@ -73,7 +73,7 @@ autostart = true
 
 [node name="Explosion" type="Area2D" parent="."]
 
-[node name="Shape" type="CollisionShape2D" parent="Explosion"]
+[node name="Shape3D" type="CollisionShape2D" parent="Explosion"]
 shape = SubResource( 1 )
 
 [connection signal="animation_finished" from="." to="." method="_on_AnimatedSprite_animation_finished"]

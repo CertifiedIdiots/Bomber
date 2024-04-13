@@ -7,7 +7,7 @@
 [node name="RichTextLabel2" type="RichTextLabel" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -130.0
-margin_right = 130.0
-margin_bottom = 40.0
+offset_left = -130.0
+offset_right = 130.0
+offset_bottom = 40.0
 script = ExtResource( 1 )
